@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ['prettier'],
+  plugins: ['prettier', 'cypress'],
   extends: 'eslint:recommended',
   extends: ['plugin:chai-friendly/recommended'],
   extends: ['plugin:cypress/recommended'],

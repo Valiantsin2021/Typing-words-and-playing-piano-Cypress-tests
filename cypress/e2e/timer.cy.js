@@ -3,11 +3,11 @@
 describe('Should check timer in given time', () => {
   it('Check timer change each second', () => {
     cy.visit('https://timerdoro.com/')
-    cy.get('.btn-dark').click();
-    cy.get('[data-preset="timerdoro"]').click();
-    cy.get('.flex-grow-0').click();
-    cy.get('.btn-group.mb-4 > .active').click();
-    cy.get('p.mb-4 > .btn').click();
+    cy.get('.btn-dark').click()
+    cy.get('[data-preset="timerdoro"]').click()
+    cy.get('.flex-grow-0').click()
+    cy.get('.btn-group.mb-4 > .active').click()
+    cy.get('p.mb-4 > .btn').click()
     cy.get('div.TimerList div.dropdown')
       .eq(2)
       .find('a')
