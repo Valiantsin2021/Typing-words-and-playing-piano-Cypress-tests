@@ -1,0 +1,30 @@
+{
+  "name": "typing_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open",
+    "lint": "eslint ./cypress/e2e/*.js",
+    "format": "prettier --write ."
+  },
+  "pre-commit": [
+    "format",
+    "lint"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.1.0",
+    "cypress-real-events": "^1.7.4",
+    "cypress-recurse": "^1.24.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "2.7.1"
+  }
+}
