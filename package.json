@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^10.2.0",
+    "cypress": "^12.1.0",
     "cypress-real-events": "^1.7.4",
     "cypress-recurse": "^1.24.0",
     "eslint": "^8.23.0",

@@ -1,71 +1,5 @@
-// import { each } from 'cypress-recurse'
-
 describe('Should type all the words in given time', () => {
-  it('Type all words in 1 minute', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
-    cy.visit('https://www.typing.com/student/typing-test/1-minute')
-    // cy.contains('a', 'Start Typing Today »').click()
-    // cy.contains('a', 'Tests').click({ force: true })
-    // cy.contains('1 Minute Typing Test').click()
-    cy.get('.js-continue-button').click()
-    cy.get('h3.js-test-countdown')
-      .invoke('text')
-      .as('text')
-      .then(text => {
-        expect(text.trim()).to.equal('1:00')
-      })
-    // cy.clock()
-    cy.get('div.letter')
-      .its('length')
-      .then(length => cy.log(length))
-    cy.get('div.letter').each(el => {
-      cy.get('@text').then(text => {
-        if (text.trim() === '0:55') {
-          return false
-        }
-        if (el.html() === '&nbsp;') {
-          cy.realPress('Space')
-        } else {
-          cy.realType(el.text())
-        }
-      })
-    })
-    cy.get('.modal-close').click()
-    // cy.tick(61_000)
-  })
-  it('Type all words in 1 minute', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
-    cy.visit('https://www.typing.com/student/typing-test/1-minute')
-    cy.get('.js-continue-button').click()
-    cy.get('h3.js-test-countdown')
-      .invoke('text')
-      .as('text')
-      .then(text => {
-        expect(text.trim()).to.equal('1:00')
-      })
-    cy.get('div.letter').then(
-      each(function (el) {
-        return cy.get('@text').then(text => {
-          if (text.trim() === '0:00') {
-            return
-          } else {
-            cy.wrap(el).then(el => {
-              if (el.html() === '&nbsp;') {
-                cy.realPress('Space')
-              } else {
-                cy.realType(el.text())
-              }
-            })
-          }
-        })
-      })
-    )
-  })
-  it('Makes all passed', () => {
+  it('Add style to text elements to make all "typed"', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
@@ -73,22 +7,47 @@ describe('Should type all the words in given time', () => {
     cy.get('.js-continue-button').click()
     cy.intercept('POST', '/apiv1/student/stats').as('req')
     cy.clock()
-
     cy.get('div.letter')
       .eq(0)
       .invoke('text')
       .then(text => {
         cy.realType(text)
       })
-    // cy.get('div.letter').each(el => {
-    //   el.addClass(' is-right')
-    // })
+    cy.get('div.letter').each(el => {
+      el.addClass(' is-right')
+    })
     cy.tick(61000)
     cy.wait('@req')
       .its('request.body')
       .then(body => cy.log(body))
   })
-  it('Makess POST request', () => {
+  it('Type all words in 1 minute for cycle', () => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      return false
+    })
+    cy.visit('https://www.typing.com/student/typing-test/1-minute')
+    cy.get('.js-continue-button').click()
+    cy.get('h3.js-test-countdown')
+      .invoke('text')
+      .as('text')
+      .then(text => {
+        expect(text.trim()).to.equal('1:00')
+      })
+    cy.get('div.letter')
+      .invoke('text')
+      .then(text => {
+        cy.log(text)
+        let arr = text.replaceAll(/\u00A0/g, ' ').split('')
+        for (let i = 0; i < 500; i++) {
+          if (arr[i] === ' ') {
+            cy.realPress('Space')
+          } else {
+            cy.realType(arr[i])
+          }
+        }
+      })
+  })
+  it('Makes POST request to make typing test pass', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     })
