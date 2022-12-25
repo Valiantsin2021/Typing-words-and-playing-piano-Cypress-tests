@@ -1,6 +1,6 @@
 describe('Should type all the words in given time', () => {
   it('Add style to text elements to make all "typed"', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
+    Cypress.on('uncaught:exception', () => {
       return false
     })
     cy.visit('https://www.typing.com/student/typing-test/1-minute')
@@ -22,7 +22,7 @@ describe('Should type all the words in given time', () => {
       .then(body => cy.log(body))
   })
   it('Type all words in 1 minute for cycle', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
+    Cypress.on('uncaught:exception', () => {
       return false
     })
     cy.visit('https://www.typing.com/student/typing-test/1-minute')
@@ -39,20 +39,29 @@ describe('Should type all the words in given time', () => {
       .then(text => {
         cy.log(text)
         let arr = text.replaceAll(/\u00A0/g, ' ').split('')
+        let start = performance.now()
         for (let i = 0; i < 500; i++) {
-          if (arr[i] === ' ') {
-            cy.realPress('Space')
-          } else {
-            cy.realType(arr[i])
-          }
+          cy.wrap(start).then(start => {
+            let end = performance.now()
+            if (end - start > 60000) {
+              return false
+            } else {
+              if (arr[i] === ' ') {
+                cy.realPress('Space')
+              } else {
+                cy.realType(arr[i])
+              }
+            }
+          })
         }
         cy.wait('@req')
           .its('request.body')
           .then(body => cy.log(body))
+        cy.get('.modal-close').click()
       })
   })
   it('Makes POST request to make typing test pass', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
+    Cypress.on('uncaught:exception', () => {
       return false
     })
     cy.visit('https://www.typing.com/student/typing-test/1-minute')
@@ -134,5 +143,33 @@ describe('Should type all the words in given time', () => {
       expect(response.status).to.be.equal(200)
       cy.log(response.body)
     })
+    cy.visit('https://www.typing.com/student/typing-test/1-minute')
+  })
+  it('Yet another test', () => {
+    cy.visit('https://ezoic-test.aoeu.eu/?e')
+    cy.get('#ez-accept-all').click()
+    let start = performance.now()
+    for (let i = 0; i < 200; i++) {
+      cy.get('#words span')
+        .eq(i)
+        .invoke('text')
+        .then(text => {
+          cy.get('#input').focus()
+          let arr = text.split('')
+          let length = arr.length
+          for (let i = 0; i <= length; i++) {
+            cy.wrap(start).then(start => {
+              let end = performance.now()
+              if (end - start > 5000) {
+                return false
+              } else if (i === length) {
+                cy.realPress('Space')
+              } else {
+                cy.realType(arr[i])
+              }
+            })
+          }
+        })
+    }
   })
 })

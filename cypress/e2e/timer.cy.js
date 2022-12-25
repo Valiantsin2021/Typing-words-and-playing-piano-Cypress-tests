@@ -1,5 +1,3 @@
-// import { each } from 'cypress-recurse'
-
 describe('Should check timer in given time', () => {
   it('Check timer change each second', () => {
     cy.visit('https://timerdoro.com/')
@@ -20,5 +18,16 @@ describe('Should check timer in given time', () => {
     cy.get('@sec').should('have.text', '58')
     cy.get('.btn-group > .flex-fill').click()
     cy.get('@sec').should('have.text', '00')
+  })
+  it('measure time', () => {
+    cy.visit('https://timerdoro.com/').then(() => {
+      let start = performance.now()
+      cy.get('.btn-dark').click()
+      cy.get('[data-preset="timerdoro"]').click()
+      cy.wrap(start).then(start => {
+        let end = performance.now()
+        cy.log(end - start)
+      })
+    })
   })
 })
