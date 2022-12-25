@@ -1,6 +1,6 @@
 describe('Should play piano', () => {
   it('Press all piano keys consequently', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
+    Cypress.on('uncaught:exception', () => {
       return false
     })
     cy.visit('https://www.musicca.com/piano')
