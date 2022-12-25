@@ -145,7 +145,7 @@ describe('Should type all the words in given time', () => {
     })
     cy.visit('https://www.typing.com/student/typing-test/1-minute')
   })
-  it('Yet another test', () => {
+  xit('Yet another test', () => {
     cy.visit('https://ezoic-test.aoeu.eu/?e')
     cy.get('#ez-accept-all').click()
     let start = performance.now()
