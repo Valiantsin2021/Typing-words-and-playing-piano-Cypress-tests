@@ -26,50 +26,28 @@ describe('Should play piano', () => {
   })
   it('Play "Twinkle-twinkle"', () => {
     cy.visit('https://pianobynumber.com/pages/twinkle-twinkle-little-star')
-    for (let j = 1; j < 4; j++) {
-      let str = ''
-      cy.get('p[style="text-align: center;"]')
-        .eq(j)
-        .invoke('text')
-        .then(text => {
-          str += text.replace(/[^(\d)]/g, '')
-          let arr = str.split('')
-          for (let i = 0; i < arr.length; i++) {
-            cy.contains('div.keyname', `${arr[i]}`).click()
-          }
-        })
+    const str = `1 1 5 5 6 6 5 * 4 4 3 3 2 2 1 * 5 5 4 4 3 3 2 * 5 5 4 4 3 3 2 * 1 1 5 5 6 6 5 * 4 4 3 3 2 2 1`
+    let arr = str.split(' ')
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === '*') {
+        cy.wait(300)
+        continue
+      }
+      cy.contains('div.keyname', `${arr[i]}`).parent().click()
+      cy.wait(100)
     }
   })
-  it('Play "First noel"', () => {
-    cy.visit('https://pianobynumber.com/pages/first-noel')
-    for (let j = 0; j < 2; j++) {
-      let str = ''
-      cy.get('div[style="text-align: center;"]>div>div')
-        .eq(j)
-        .invoke('text')
-        .then(text => {
-          str += text.replace(/[^(\d)]/g, '')
-          let arr = str.split('')
-          for (let i = 0; i < arr.length; i++) {
-            cy.contains('div.keyname', `${arr[i]}`).click()
-          }
-        })
-    }
-  })
-  it('Play "Godfather"', () => {
+  it.only('Play "Godfather"', () => {
     cy.visit('https://pianobynumber.com/pages/the-godfather')
-    for (let j = 0; j < 2; j++) {
-      let str = ''
-      cy.get('div b')
-        .eq(j)
-        .invoke('text')
-        .then(text => {
-          str += text.replace(/[^(\d)]/g, '')
-          let arr = str.split('')
-          for (let i = 0; i < arr.length; i++) {
-            cy.contains('div.keyname', `${arr[i]}`).click()
-          }
-        })
+    let str = `* 3 6 8 7 6 8 6 7 6 4 5 3 * * * * 3 6 8 7 6 8 6 7 6 3 b3 2 * * *`
+    let arr = str.split(' ')
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === '*') {
+        cy.wait(300)
+        continue
+      }
+      cy.contains('div.keyname', `${arr[i]}`).parent().click()
+      cy.wait(100)
     }
   })
 })

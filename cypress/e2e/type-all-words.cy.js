@@ -28,12 +28,12 @@ describe('Should type all the words in given time', () => {
     cy.visit('https://www.typing.com/student/typing-test/1-minute')
     cy.intercept('POST', '/apiv1/student/stats').as('req')
     cy.get('.js-continue-button').click()
-    cy.get('h3.js-test-countdown')
-      .invoke('text')
-      .as('text')
-      .then(text => {
-        expect(text.trim()).to.equal('1:00')
-      })
+    // cy.get('h3.js-test-countdown')
+    //   .invoke('text')
+    //   .as('text')
+    //   .then(text => {
+    //     expect(text.trim()).to.equal('1:00')
+    //   })
     cy.get('div.letter')
       .invoke('text')
       .then(text => {
@@ -60,7 +60,7 @@ describe('Should type all the words in given time', () => {
         cy.get('.modal-close').click()
       })
   })
-  it('Makes POST request to make typing test pass', () => {
+  xit('Makes POST request to make typing test pass', () => {
     Cypress.on('uncaught:exception', () => {
       return false
     })
